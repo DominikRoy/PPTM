@@ -33,7 +33,7 @@ query attacker(dA1).
 query attacker(dB1k).
 
 (*Verify the non interference property for the capsule identifiers A and B, which means that 
-the different secrets are indistingishuable for the adversary strong secrecy.*)
+the different secrets are indistingishuable for the adversary, implying strong secrecy.*)
 noninterf dB1k.
 noninterf dA1.
 
