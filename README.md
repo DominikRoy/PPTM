@@ -13,7 +13,7 @@ To run the scripts:
 - go to ./ProVerif/
 - run our protocol by executing the command:
 ```properties
- ./proverif.exe pprst.pv 
+ ./proverif.exe pptm.pv 
 ```  
 
 
