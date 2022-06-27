@@ -2,11 +2,10 @@ This is the source code used to verify some of the security properties of the PS
 
 The folder contains the ProVerif code and the executable for ProVerif.
 
-- pprst.pv 
-The code is meant to verify the secrecy of the cell identifier a and b from the adversary. 
-Moreover, we verify if the attacker is able to brute-force/guess the identifier a and b. 
-We verify with ProVerif if the adversary is able to retrieve the value rA (the nonce).
-
+- pptm.pv 
+The code is meant to verify the secrecy of the capsule identifier dA1 and dB1k from the adversary. 
+Moreover, we verify if the attacker is able to brute-force/guess the identifiers dA1 and dB1k.
+We verify with ProVerif the strong secrecy, which shows that the adversary cannot distinguish between different secrets.
 
 To run the scripts:
 - compress the archive
