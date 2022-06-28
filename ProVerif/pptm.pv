@@ -9,10 +9,10 @@ type N.
 (* The attacker should not have knowledge of the actual identifier of the capsule mapped from  f (see paper Sec.4.2 step (4)) (secret).
 Although, we define the secret as "weak" to check if offline brute-force or dictionary attacks are feasible. *)
 
-free dA1: bitstring [private].
-weaksecret dA1.
-free dB1k: bitstring [private].
-weaksecret dB1k.
+free dAi: bitstring [private].
+weaksecret dAi.
+free dBik: bitstring [private].
+weaksecret dBik.
 
 
 (* Types, Constants and Variables *)
@@ -29,13 +29,13 @@ type index.
 
 (* A formal query, specifying the attacker can't ever be leaked the
 actual capsule identifiers during the protocol. *)
-query attacker(dA1).
-query attacker(dB1k).
+query attacker(dAi).
+query attacker(dBik).
 
 (*Verify the non interference property for the capsule identifiers A and B, which means that 
-the different secrets are indistingishuable for the adversary, implying strong secrecy.*)
-noninterf dB1k.
-noninterf dA1.
+the different secrets are indistingishuable for the adversary strong secrecy.*)
+noninterf dBik.
+noninterf dAi.
 
 (*Auxiliary Functions*)
 fun hash(bitstring):bitstring.
@@ -58,30 +58,30 @@ event end_UAV_B(bitstring).
 (* The process for UAV A*)
 let uavA(nB:N) =
     (* Step (3) of Sec.4.2 in our paper*)
-    new O1:origin;
-    new T1:angle;
-    new r1:radius;
-    new h1:length;
-    new xi1:nonce;
+    new Oi:origin;
+    new Ti:angle;
+    new ri:radius;
+    new hi:length;
+    new xii:nonce;
 
     (* Step (6) of Sec.4.2, Eq.9*)
-    let cA1 = exp_mod(nonce_to_bitstring(xi1), dA1, nB) in
+    let cAi = exp_mod(nonce_to_bitstring(xii), dAi, nB) in
     (* Step (7) of Sec.4.2*)
-    out (c,(cA1,O1,T1,r1,h1));
+    out (c,(cAi,Oi,Ti,ri,hi));
     (* Step (11) of Sec.4.2*)
-    in (c, cB1:vector);
+    in (c, cBi:vector);
     new k:index;
-    let cB1k = extract_elem(cB1,k) in
+    let cBik = extract_elem(cBi,k) in
     (* Step (12) of Sec.4.2, Eq. 12*)
-    let wA1k = hash(mod(nonce_to_bitstring(xi1),nB)) in 
+    let wAik = hash(mod(nonce_to_bitstring(xii),nB)) in 
     (* Step (15) of Sec.4.2*)
-    if wA1k = cB1k then ( 
+    if wAik = cBik then ( 
         (* Step (13) of Sec.4.2, Eq. 14*)
-        let wA1 = hash(mod(append(nonce_to_bitstring(xi1),dA1),nB)) in
+        let wAi = hash(mod(append(nonce_to_bitstring(xii),dAi),nB)) in
         (* Step (16) of Sec.4.2 ==> paper*)
-        out(c,wA1);
+        out(c,wAi);
     
-        event end_UAV_A(cB1)).
+        event end_UAV_A(cBi)).
 
 
 
@@ -93,24 +93,24 @@ let uavA(nB:N) =
 (* The process for UAV B*)
 let uavB(nB:N) =
     (* Step (8) of Sec.4.2*)
-    in(c, (cA1:bitstring,O1:origin,T1:angle,r1:radius,h1:length));
-    let GB1 = map_trajectory(O1,T1,r1,h1) in
+    in(c, (cAi:bitstring,Oi:origin,Ti:angle,ri:radius,hi:length));
+    let GBi = map_trajectory(Oi,Ti,ri,hi) in
     new k:index;
     (* Step (9) of Sec.4.2*)
-    let eB1k = inv_mod(dB1k,nB) in
+    let eBik = inv_mod(dBik,nB) in
     (* Step (10) of Sec.4.2, Eq. 10*)
-    let x = exp_mod(cA1,eB1k,nB) in
+    let x = exp_mod(cAi,eBik,nB) in
     (* Step (10) of Sec.4.2, Eq. 11*)
-    let cB1k = hash(x) in
-    new cB1:vector;
-    let cB1 = add_elem(cB1,cB1k,k) in
+    let cBik = hash(x) in
+    new cBi:vector;
+    let cBi = add_elem(cBi,cBik,k) in
     (* Step (11) of Sec.4.2*)
-    out (c, cB1);
+    out (c, cBi);
     (* Step (16) of Sec.4.2*)
-    in (c, wA1:bitstring);
+    in (c, wAi:bitstring);
     (* Step (17) of Sec.4.2, Eq. 15*)
-    if wA1 = hash(mod(append(x,dB1k),nB)) then (
-        event end_UAV_B(wA1)).
+    if wAi = hash(mod(append(x,dBik),nB)) then (
+        event end_UAV_B(wAi)).
 
 process
     new nB: N;
