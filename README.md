@@ -1,4 +1,4 @@
-This is the source code used to verify some of the security properties of the PSM protocol.
+This is the source code used to verify some of the security properties of the PPTM protocol.
 
 The folder contains the ProVerif code and the executable for ProVerif.
 
@@ -8,7 +8,7 @@ Moreover, we verify if the attacker is able to brute-force/guess the identifiers
 We verify with ProVerif the strong secrecy, which shows that the adversary cannot distinguish between different secrets.
 
 To run the scripts:
-- compress the archive
+- uncompress the archive
 - go to ./ProVerif/
 - run our protocol by executing the command:
 ```properties
