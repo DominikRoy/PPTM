@@ -17,6 +17,7 @@ To run the scripts for Windows:
 ```  
 
 To run the scripts for Linux:
+- make sure the packages: [ocaml](https://packages.ubuntu.com/search?suite=default&section=all&arch=any&keywords=ocaml&searchon=names), [ocaml-compiler-libs](https://packages.ubuntu.com/search?keywords=ocaml-compiler-libs) and [LablGTK2](https://packages.ubuntu.com/search?suite=default&section=all&arch=any&keywords=LablGTK2&searchon=names) are installed
 - download the source of ProVerif for [Linux](https://bblanche.gitlabpages.inria.fr/proverif/proverif2.04.tar.gz)
 - extract archive:
 ```properties
@@ -27,7 +28,8 @@ To run the scripts for Linux:
  cd proverif2.04
  ./build
 ```
+- clone the git repository into the current folder where the command above was executed
 - run our protocol by executing the command for Linux:
 ```properties
- ./proverif pptm.pv
+ ./proverif /PPTM/ProVerif/pptm.pv
 ```
